@@ -1,0 +1,3 @@
+body { font-family: system-ui; }
+.animada { animation: mover 5s linear infinite; }
+@keyframes mover { to { transform: translateX(100px); } }

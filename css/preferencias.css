@@ -1,0 +1,612 @@
+@font-face {
+  font-family: "Atkinson Hyperlegible";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(../fonts/font-0.ttf) format("truetype");
+}
+@font-face {
+  font-family: "Atkinson Hyperlegible";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(../fonts/font-1.ttf) format("truetype");
+}
+@font-face {
+  font-family: "Lexend";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(../fonts/font-2.ttf) format("truetype");
+}
+@font-face {
+  font-family: "Lexend";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(../fonts/font-3.ttf) format("truetype");
+}
+@font-face {
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 400;
+  font-stretch: normal;
+  font-display: swap;
+  src: url(../fonts/font-4.ttf) format("truetype");
+}
+@font-face {
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 700;
+  font-stretch: normal;
+  font-display: swap;
+  src: url(../fonts/font-5.ttf) format("truetype");
+}
+
+/* Preferências 1.7.2. Folha compartilhada entre documento e Shadow DOM. */
+#fm-preferences {
+  position: relative;
+  z-index: 2147483000;
+}
+:host {
+  all: initial;
+  font-family: system-ui, sans-serif;
+  font-size: 1.15rem;
+  color: #321b37;
+  line-height: 1.5;
+}
+:host * {
+  box-sizing: border-box;
+}
+:host [hidden] {
+  display: none !important;
+}
+:host .sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+:host .trigger {
+  position: fixed;
+  top: 12px;
+  right: 16px;
+  padding: 10px 17px;
+  background: #4c205b;
+  color: #fff;
+  border: 1px solid #fff;
+  border-radius: 100px;
+  font:
+    600 1rem/1.5 system-ui,
+    sans-serif;
+  text-decoration: none;
+  text-underline-offset: 3px;
+  box-shadow: 0 3px 16px #28172b26;
+}
+:host .panel {
+  position: fixed;
+  top: 68px;
+  right: 16px;
+  width: 370px;
+  max-width: calc(100% - 24px);
+  max-height: min(640px, calc(100dvh - 80px));
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid #d8c5df;
+  border-radius: 16px;
+  box-shadow: 0 16px 60px #321b3740;
+}
+:host .panel-header {
+  flex: 0 0 auto;
+  padding: 20px 20px 12px;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+:host .eyebrow {
+  margin: 0 0 6px;
+  color: #764778;
+  font-size: 0.9rem;
+  font-weight: 750;
+  letter-spacing: 0.12em;
+}
+:host h2 {
+  margin: 0;
+  font-size: 1.438rem;
+  line-height: 1.25;
+}
+:host button,
+:host select {
+  font: inherit;
+  color: inherit;
+}
+:host button {
+  cursor: pointer;
+}
+:host .close {
+  font-size: 0.9rem;
+  background: #f5edf5;
+  border: 1px solid #d8c5df;
+  border-radius: 8px;
+  min-height: 44px;
+  padding: 8px;
+}
+:host .intro {
+  margin: 0;
+  padding: 0 20px 16px;
+  font-size: 0.934rem;
+  color: #66516b;
+}
+:host .controls {
+  padding: 0 14px;
+}
+:host .control {
+  background: #f8f4f9;
+  border: 1px solid #e9dfea;
+  border-radius: 9px;
+  padding: 10px 12px;
+  margin-bottom: 8px;
+}
+:host label {
+  display: block;
+  font-size: 0.934rem;
+  font-weight: 650;
+  margin-bottom: 5px;
+}
+:host select {
+  width: 100%;
+  min-height: 36px;
+  padding: 6px 8px;
+  border: 1px solid #ad95b5;
+  border-radius: 6px;
+  background: #fff;
+  font-size: 1.006rem;
+}
+:host footer {
+  padding: 8px 20px 18px;
+}
+:host .reset {
+  background: #4c205b;
+  color: #fff;
+  border: 0;
+  border-radius: 8px;
+  min-height: 44px;
+  padding: 10px 16px;
+  width: 100%;
+  font-size: 1.006rem;
+}
+:host .status,
+:host .note {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin: 10px 0 0;
+  color: #66516b;
+}
+:host .note {
+  border-top: 1px solid #e9dfea;
+  padding-top: 10px;
+}
+:host :focus-visible {
+  outline: 3px solid #9f2368;
+  outline-offset: 3px;
+}
+@media (max-width: 420px) {
+  :host .panel {
+    right: 12px;
+  }
+  :host .trigger {
+    right: 12px;
+  }
+}
+html[data-fm-size="125"] {
+  font-size: 125% !important;
+}
+html[data-fm-size="150"] {
+  font-size: 150% !important;
+}
+html[data-fm-size="175"] {
+  font-size: 175% !important;
+}
+html[data-fm-size="200"] {
+  font-size: 200% !important;
+}
+html[data-fm-line="150"] body * {
+  line-height: 1.5 !important;
+}
+html[data-fm-line="175"] body * {
+  line-height: 1.75 !important;
+}
+html[data-fm-line="200"] body * {
+  line-height: 2 !important;
+}
+html[data-fm-letter="005"] body * {
+  letter-spacing: 0.05em !important;
+}
+html[data-fm-letter="010"] body * {
+  letter-spacing: 0.1em !important;
+}
+html[data-fm-letter="015"] body * {
+  letter-spacing: 0.15em !important;
+}
+html[data-fm-word="010"] body * {
+  word-spacing: 0.1em !important;
+}
+html[data-fm-word="020"] body * {
+  word-spacing: 0.2em !important;
+}
+html[data-fm-word="030"] body * {
+  word-spacing: 0.3em !important;
+}
+html[data-fm-font="system"] {
+  --fm-font: system-ui, sans-serif;
+}
+html[data-fm-font="arial"] {
+  --fm-font: Arial, sans-serif;
+}
+html[data-fm-font="verdana"] {
+  --fm-font: Verdana, sans-serif;
+}
+html[data-fm-font="serif"] {
+  --fm-font: Georgia, serif;
+}
+html[data-fm-font]
+  body
+  :not(svg, svg *, .material-icons, .material-symbols-outlined) {
+  font-family: var(--fm-font) !important;
+}
+html[data-fm-inputs]
+  body
+  :is(input:not([type="hidden"]), select, textarea, button, [role="button"]) {
+  outline: 2px solid currentColor !important;
+  outline-offset: 2px !important;
+  min-height: 44px;
+}
+html[data-fm-inputs] body a {
+  text-decoration: underline !important;
+  text-underline-offset: 0.2em;
+  font-weight: bold !important;
+}
+html[data-fm-inputs] body :focus-visible {
+  outline: 4px double currentColor !important;
+  outline-offset: 4px !important;
+}
+html[data-fm-contrast="light"] {
+  --fm-bg: #fff;
+  --fm-fg: #111;
+}
+html[data-fm-contrast="dark"] {
+  --fm-bg: #111;
+  --fm-fg: #fff;
+}
+html[data-fm-contrast="yellow"] {
+  --fm-bg: #000;
+  --fm-fg: #ffeb3b;
+}
+html[data-fm-contrast="sepia"] {
+  --fm-bg: #f5e8ca;
+  --fm-fg: #392919;
+}
+html[data-fm-contrast],
+html[data-fm-contrast] body,
+html[data-fm-contrast]
+  body
+  :not(svg, svg *, img, video, canvas, #fm-preferences) {
+  background-color: var(--fm-bg) !important;
+  color: var(--fm-fg) !important;
+  border-color: currentColor !important;
+  background-image: none !important;
+  text-shadow: none !important;
+}
+html[data-fm-contrast] body a {
+  text-decoration: underline !important;
+}
+
+:host .visibility-option {
+  padding: 14px;
+  margin: 0 0 16px;
+  background: #f9e6f1;
+  border: 2px solid #9f2368;
+  border-radius: 9px;
+}
+:host .visibility-label {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  min-height: 44px;
+  margin: 0;
+  cursor: pointer;
+}
+:host .visibility-label input {
+  flex: 0 0 auto;
+  width: 20px;
+  height: 20px;
+  margin: 2px 0 0;
+  accent-color: #792452;
+}
+:host .visibility-option p {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin: 10px 0 0;
+  color: #53304a;
+}
+:host .version {
+  display: block;
+  margin-top: 5px;
+  font-weight: 650;
+}
+
+:host .checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  cursor: pointer;
+}
+:host .checkbox-label input {
+  flex: 0 0 auto;
+  width: 20px;
+  height: 20px;
+  accent-color: #792452;
+}
+:host .control .control {
+  padding: 6px 0 0;
+  border: 0;
+  margin: 0;
+}
+:host .control-help {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin: 6px 0 0;
+  color: #66516b;
+}
+html[data-fm-bold]
+  body
+  :not(svg, svg *, .material-icons, .material-symbols-outlined) {
+  font-weight: 700 !important;
+}
+html[data-fm-motion],
+html[data-fm-motion] *,
+html[data-fm-motion] *::before,
+html[data-fm-motion] *::after {
+  animation-play-state: paused !important;
+  transition: none !important;
+  scroll-behavior: auto !important;
+}
+html[data-fm-zoom="125"] body {
+  zoom: 1.25;
+}
+html[data-fm-zoom="125"] #fm-preferences {
+  zoom: 0.8;
+}
+html[data-fm-zoom="150"] body {
+  zoom: 1.5;
+}
+html[data-fm-zoom="150"] #fm-preferences {
+  zoom: 0.66666667;
+}
+html[data-fm-zoom="175"] body {
+  zoom: 1.75;
+}
+html[data-fm-zoom="175"] #fm-preferences {
+  zoom: 0.57142857;
+}
+html[data-fm-zoom="200"] body {
+  zoom: 2;
+}
+html[data-fm-zoom="200"] #fm-preferences {
+  zoom: 0.5;
+}
+html[data-fm-zoom="300"] body {
+  zoom: 3;
+}
+html[data-fm-zoom="300"] #fm-preferences {
+  zoom: 0.33333333;
+}
+html[data-fm-zoom="400"] body {
+  zoom: 4;
+}
+html[data-fm-zoom="400"] #fm-preferences {
+  zoom: 0.25;
+}
+html[data-fm-cursor="yellow"] {
+  --fm-cursor: url("../img/cursor-yellow.svg") 2 2, auto;
+}
+html[data-fm-cursor="blue"] {
+  --fm-cursor: url("../img/cursor-blue.svg") 2 2, auto;
+}
+html[data-fm-cursor="white"] {
+  --fm-cursor: url("../img/cursor-white.svg") 2 2, auto;
+}
+html[data-fm-cursor="black"] {
+  --fm-cursor: url("../img/cursor-black.svg") 2 2, auto;
+}
+html[data-fm-cursor],
+html[data-fm-cursor] body * {
+  cursor: var(--fm-cursor) !important;
+}
+:host *,
+:host .trigger {
+  cursor: var(--fm-cursor, auto);
+}
+
+:host .more-preferences {
+  margin: 0 14px 16px;
+  border: 1px solid #ad95b5;
+  border-radius: 9px;
+  background: #f8f4f9;
+}
+:host .more-preferences summary {
+  padding: 12px;
+  min-height: 44px;
+  cursor: pointer;
+  font-size: 1.006rem;
+  font-weight: 650;
+  color: #4c205b;
+}
+:host .extra-controls {
+  padding: 0 10px 2px;
+}
+
+:host .panel-content {
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+  scrollbar-width: thin;
+  scrollbar-color: #987aa3 #f8f4f9;
+  padding: 4px 4px 8px;
+}
+:host .panel-content::-webkit-scrollbar {
+  width: 8px;
+}
+:host .panel-content::-webkit-scrollbar-track {
+  background: #f8f4f9;
+}
+:host .panel-content::-webkit-scrollbar-thumb {
+  background: #987aa3;
+  border: 2px solid #f8f4f9;
+  border-radius: 8px;
+}
+:host .preference-group {
+  margin-bottom: 6px;
+  background: #f8f4f9;
+  border: 1px solid #e9dfea;
+  border-radius: 9px;
+}
+:host .preference-group summary {
+  min-height: 44px;
+  padding: 10px 12px;
+  cursor: pointer;
+  font-size: 0.934rem;
+  font-weight: 650;
+}
+:host .preference-group > .control {
+  border: 0;
+  margin: 0;
+  padding-top: 2px;
+}
+:host .preference-group summary:focus-visible,
+:host .more-preferences summary:focus-visible {
+  outline-offset: -3px;
+  border-radius: 8px;
+}
+
+:host .show-all {
+  margin: 0 14px 12px;
+  padding: 8px 10px;
+  border: 1px solid #ad95b5;
+  border-radius: 9px;
+  background: transparent;
+}
+
+:host .project-credit {
+  margin: 8px 0 0;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: #66516b;
+}
+:host .project-credit a {
+  color: #4c205b;
+  text-decoration: none;
+  text-underline-offset: 2px;
+}
+:host .external-icon {
+  width: 14px;
+  height: 14px;
+  margin-left: 4px;
+  vertical-align: -2px;
+  fill: currentColor;
+}
+
+html[data-fm-font="atkinson"] {
+  --fm-font: "Atkinson Hyperlegible", sans-serif;
+}
+html[data-fm-font="lexend"] {
+  --fm-font: "Lexend", sans-serif;
+}
+html[data-fm-font="open-sans"] {
+  --fm-font: "Open Sans", sans-serif;
+}
+
+/* Keep the selected cursor; otherwise show the native link/action pointer. */
+:host button,
+:host summary {
+  cursor: var(--fm-cursor, pointer);
+}
+
+:host .external-icon {
+  cursor: var(--fm-cursor, default);
+}
+
+:host .project-credit a:hover,
+:host .project-credit a:focus-visible {
+  text-decoration-line: underline;
+  color: #321b37;
+  text-decoration-thickness: 0.12em;
+}
+:host button {
+  text-decoration: none;
+  text-underline-offset: 0.22em;
+}
+:host button:hover,
+:host .trigger:hover {
+  text-decoration: underline;
+}
+:host .trigger:hover,
+:host .trigger:focus-visible,
+:host .reset:hover,
+:host .reset:focus-visible {
+  background-color: #321b37;
+  color: #fff;
+}
+:host .close:hover,
+:host .close:focus-visible {
+  background-color: #eee2f0;
+  color: #321b37;
+}
+
+/* Links remain recognizable as links even when a custom cursor is selected. */
+:host a[href],
+:host a[href] * {
+  cursor: pointer !important;
+}
+
+:host .trigger-icon {
+  display: none;
+  width: 26px;
+  height: 26px;
+  fill: currentColor;
+}
+:host .trigger-compact {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 8px;
+}
+:host .trigger-compact .trigger-icon {
+  display: block;
+}
+
+:host .configured-badge {
+  display: inline-block;
+  margin-left: 0.35em;
+  padding: 2px 7px;
+  border-radius: 5px;
+  background: #4c205b;
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 600;
+  line-height: 1.4;
+  vertical-align: baseline;
+}
+:host .is-configured {
+  border-color: #9f2368;
+}
