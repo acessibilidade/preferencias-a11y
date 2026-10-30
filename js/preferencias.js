@@ -1,8 +1,8 @@
-/* Preferências 1.7.2 — implementação independente, sem dependências. */
+/* Preferências 1.8.2 — implementação independente, sem dependências. */
 (() => {
   'use strict';
   const script = document.currentScript;
-  const cssURL = new URL('../css/preferencias.css?v=1.7.2', script.src).href;
+  const cssURL = new URL('../css/preferencias.css?v=1.8.2', script.src).href;
   const key = 'fm-preferencias-v1';
   const visibilityKey = `fm-preferencias-hidden-v1:${location.pathname}${location.search}`;
   const compactKey = `fm-preferencias-compact-v1:${location.pathname}${location.search}`;
@@ -56,6 +56,22 @@
         </header>
         <div class="panel-content">
           <p class="intro">Ajuste a apresentação desta página para você.</p>
+          <label class="show-all checkbox-label" for="fm-floating">
+            <input id="fm-floating" type="checkbox" aria-describedby="fm-floating-help">
+            <span>deixar esta camada flutuante</span>
+          </label>
+          <div class="floating-controls" hidden>
+            <p id="fm-floating-help">Arraste pelo botão Mover painel, use as setas do teclado nesse botão ou selecione uma direção abaixo.</p>
+            <button type="button" class="move-handle" aria-describedby="fm-panel-position fm-floating-help">Mover painel</button>
+            <p id="fm-panel-position" class="sr-only"></p>
+            <p class="sr-only move-status" role="status" aria-live="polite" aria-atomic="true"></p>
+            <div class="move-directions" role="group" aria-label="Mover painel por direção">
+              <button type="button" data-move="left" aria-label="Mover painel para a esquerda">←</button>
+              <button type="button" data-move="up" aria-label="Mover painel para cima">↑</button>
+              <button type="button" data-move="down" aria-label="Mover painel para baixo">↓</button>
+              <button type="button" data-move="right" aria-label="Mover painel para a direita">→</button>
+            </div>
+          </div>
           <label class="show-all checkbox-label" for="fm-show-all">
             <input id="fm-show-all" type="checkbox">
             <span>exibir todas as preferências</span>
@@ -82,7 +98,7 @@
             </div>
             <button type="button" class="reset">Restaurar padrão</button>
             <p class="status" role="status"></p>
-            <p class="note">Ajustar preferências não corrigem barreiras de acessibilidade do site. <span class="version">Versão 1.7.2</span></p>
+            <p class="note">Ajustar preferências não corrigem barreiras de acessibilidade do site. <span class="version">Versão 1.8.2</span></p>
             <p class="project-credit">Conheça o projeto “<a href="http://preferenciasdeacessibilidade.com/" target="_blank" rel="noopener noreferrer">Preferências de Acessibilidade<span class="sr-only"> (abre em uma nova aba)</span></a><svg class="external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>”.</p>
             <p class="project-credit">Este é um projeto de <a href="https://github.com/acessibilidade/preferencias-a11y" target="_blank" rel="noopener noreferrer">código aberto<span class="sr-only"> (abre em uma nova aba)</span></a><svg class="external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>.</p>
           </footer>
@@ -93,6 +109,137 @@
     const panel = shadow.querySelector('.panel');
     const trigger = shadow.querySelector('.trigger');
     const status = shadow.querySelector('.status');
+    const floating = shadow.querySelector('#fm-floating');
+    const floatingControls = shadow.querySelector('.floating-controls');
+    const moveHandle = shadow.querySelector('.move-handle');
+    // Runtime coordinates live in a stylesheet, never in inline HTML styles.
+    const positionSheet = new CSSStyleSheet();
+    positionSheet.replaceSync(':host .panel.is-floating { left: 0px; top: 0px; right: auto; }');
+    shadow.adoptedStyleSheets = [...shadow.adoptedStyleSheets, positionSheet];
+    const positionRule = positionSheet.cssRules[0];
+    let drag = null;
+    let announcementTimer;
+    const positionDescription = shadow.querySelector('#fm-panel-position');
+    const moveStatus = shadow.querySelector('.move-status');
+    function describePosition() {
+      const rect = panel.getBoundingClientRect();
+      const viewport = window.visualViewport;
+      const availableX = (viewport ? viewport.width : window.innerWidth) - rect.width;
+      const availableY = (viewport ? viewport.height : window.innerHeight) - rect.height;
+      const x = availableX > 1 ? (rect.left - (viewport?.offsetLeft || 0)) / availableX : 0.5;
+      const y = availableY > 1 ? (rect.top - (viewport?.offsetTop || 0)) / availableY : 0.5;
+      const column = x < 0.33 ? 0 : x > 0.67 ? 2 : 1;
+      const row = y < 0.33 ? 0 : y > 0.67 ? 2 : 1;
+      const regions = [
+        ['canto superior esquerdo', 'centro superior', 'canto superior direito'],
+        ['centro à esquerda', 'centro', 'centro à direita'],
+        ['canto inferior esquerdo', 'centro inferior', 'canto inferior direito']
+      ];
+      const text = `Posição aproximada: ${regions[row][column]} da área disponível da tela.`;
+      positionDescription.textContent = text;
+      return text;
+    }
+    function announceMovement(message) {
+      clearTimeout(announcementTimer);
+      moveStatus.textContent = '';
+      // Coalesce repeated keys and allow identical messages to be announced again.
+      announcementTimer = setTimeout(() => {
+        moveStatus.textContent = `${message} ${describePosition()}`;
+      }, 180);
+    }
+    function describeMovement(before, direction) {
+      const after = panel.getBoundingClientRect();
+      const dx = after.left - before.left;
+      const dy = after.top - before.top;
+      if (Math.abs(dx) < 1 && Math.abs(dy) < 1) {
+        const names = { left: 'à esquerda', right: 'à direita', up: 'acima', down: 'abaixo' };
+        announceMovement(direction ? `Limite ${names[direction]} atingido. O painel não foi movido.` : 'O painel não foi movido.');
+        return;
+      }
+      const movements = [];
+      if (Math.abs(dx) >= 1) movements.push(dx < 0 ? 'para a esquerda' : 'para a direita');
+      if (Math.abs(dy) >= 1) movements.push(dy < 0 ? 'para cima' : 'para baixo');
+      announceMovement(`Painel movido ${movements.join(' e ')}.`);
+    }
+
+    function positionPanel(x, y) {
+      const rect = panel.getBoundingClientRect();
+      const viewport = window.visualViewport;
+      const left = viewport ? viewport.offsetLeft : 0;
+      const top = viewport ? viewport.offsetTop : 0;
+      const width = viewport ? viewport.width : window.innerWidth;
+      const height = viewport ? viewport.height : window.innerHeight;
+      const scaleX = rect.width / panel.offsetWidth || 1;
+      const scaleY = rect.height / panel.offsetHeight || 1;
+      x = Math.max(left, Math.min(x, left + width - rect.width));
+      y = Math.max(top, Math.min(y, top + height - rect.height));
+      positionRule.style.left = `${x / scaleX}px`;
+      positionRule.style.top = `${y / scaleY}px`;
+      describePosition();
+    }
+    function stopDragging() {
+      const finishedDrag = drag;
+      drag = null;
+      if (finishedDrag) {
+        if (moveHandle.hasPointerCapture(finishedDrag.id)) moveHandle.releasePointerCapture(finishedDrag.id);
+        describeMovement(finishedDrag.start);
+      }
+      moveHandle.classList.remove('is-dragging');
+    }
+    function setFloating(enabled) {
+      stopDragging();
+      const rect = panel.getBoundingClientRect();
+      floating.checked = enabled;
+      floatingControls.hidden = !enabled;
+      panel.classList.toggle('is-floating', enabled);
+      if (enabled) positionPanel(rect.left, rect.top);
+      else {
+        clearTimeout(announcementTimer);
+        moveStatus.textContent = '';
+      }
+    }
+    floating.addEventListener('change', () => {
+      setFloating(floating.checked);
+      status.textContent = floating.checked ? 'Painel flutuante ativado.' : 'Painel devolvido à posição original.';
+    });
+    moveHandle.addEventListener('pointerdown', event => {
+      if (!floating.checked || !event.isPrimary || event.button !== 0) return;
+      const rect = panel.getBoundingClientRect();
+      drag = { id: event.pointerId, x: event.clientX - rect.left, y: event.clientY - rect.top, start: rect };
+      moveHandle.setPointerCapture(event.pointerId);
+      moveHandle.classList.add('is-dragging');
+      moveHandle.focus({ preventScroll: true });
+      event.preventDefault();
+    });
+    moveHandle.addEventListener('pointermove', event => {
+      if (drag && drag.id === event.pointerId) positionPanel(event.clientX - drag.x, event.clientY - drag.y);
+    });
+    ['pointerup', 'pointercancel', 'lostpointercapture'].forEach(type => moveHandle.addEventListener(type, stopDragging));
+    const directions = { left: [-24, 0], right: [24, 0], up: [0, -24], down: [0, 24] };
+    function movePanel(direction) {
+      if (!floating.checked) return;
+      const rect = panel.getBoundingClientRect();
+      const [x, y] = directions[direction];
+      positionPanel(rect.left + x, rect.top + y);
+      describeMovement(rect, direction);
+    }
+    moveHandle.addEventListener('focus', describePosition);
+    moveHandle.addEventListener('keydown', event => {
+      const direction = { ArrowLeft: 'left', ArrowRight: 'right', ArrowUp: 'up', ArrowDown: 'down' }[event.key];
+      if (direction) { event.preventDefault(); movePanel(direction); }
+    });
+    shadow.querySelectorAll('[data-move]').forEach(button => {
+      button.addEventListener('click', () => movePanel(button.dataset.move));
+    });
+    function constrainPanel() {
+      if (!floating.checked || panel.hidden) return;
+      const rect = panel.getBoundingClientRect();
+      positionPanel(rect.left, rect.top);
+    }
+    window.addEventListener('resize', constrainPanel);
+    window.visualViewport?.addEventListener('resize', constrainPanel);
+    window.visualViewport?.addEventListener('scroll', constrainPanel);
+    new ResizeObserver(constrainPanel).observe(panel);
     const hideTrigger = shadow.querySelector('#fm-hide-trigger');
     try { trigger.hidden = localStorage.getItem(visibilityKey) === 'true'; } catch (_) { /* Optional storage. */ }
     const compactTrigger = shadow.querySelector('#fm-compact-trigger');
@@ -153,11 +300,6 @@
         persist();
       });
     }
-    const reader = document.createElement('div');
-    reader.className = 'control';
-    reader.innerHTML = `
-      <label class="checkbox-label" for="fm-reader"><input id="fm-reader" type="checkbox" disabled aria-describedby="fm-reader-help">Modo de leitura</label>
-      <p id="fm-reader-help" class="control-help">Indisponível pelo site. Para ativar o modo de leitura nativo, use o menu do navegador, quando esse recurso estiver disponível para a página.</p>`;
     const primaryOrder = ['zoom', 'contrast', 'inputs', 'font', 'size', 'line', 'letter', 'word', 'cursor'];
     const primaryControls = shadow.querySelector('.controls');
     const configuredGroups = [];
@@ -204,7 +346,6 @@
       groups.forEach(other => { if (other !== group) other.open = false; });
     }));
     const extraControls = shadow.querySelector('.extra-controls');
-    extraControls.append(reader);
     ['motion', 'mute'].forEach(name => extraControls.append(shadow.querySelector(`#fm-${name}`).closest('.control')));
     // Old persisted "simplify" values are deliberately not loaded in this version.
     root.removeAttribute('data-fm-simplify');
@@ -283,6 +424,9 @@
       catch (_) { status.textContent += ' O navegador não permitiu salvar as preferências.'; }
     }
     function close(restoreFocus = true) {
+      stopDragging();
+      clearTimeout(announcementTimer);
+      moveStatus.textContent = '';
       panel.hidden = true;
       trigger.setAttribute('aria-expanded', 'false');
       trigger.hidden = hideTrigger.checked;
@@ -306,6 +450,7 @@
       event.preventDefault();
       if (!panel.hidden) return close();
       panel.hidden = false;
+      constrainPanel();
       trigger.setAttribute('aria-expanded', 'true');
       shadow.querySelector('#fm-title').focus();
     });
@@ -318,6 +463,7 @@
     });
     shadow.querySelector('.reset').addEventListener('click', () => {
       setAllGroups(false);
+      setFloating(false);
       Object.keys(state).forEach(name => {
         state[name] = 'original';
         const control = shadow.querySelector(`#fm-${name}`);

@@ -1,4 +1,4 @@
-# Preferências — versão 1.7.2
+# Preferências — versão 1.8.2
 
 Ferramenta independente inspirada nos recursos da [demonstração do Fluid Infusion](https://build-infusion.fluidproject.org/demos/prefsFramework/). Não inclui código ou dependências do Infusion. A imagem fornecida orientou o painel lateral sobreposto. Sem build, bibliotecas, fontes remotas, telemetria ou minificação.
 
@@ -38,7 +38,6 @@ A demonstração está em `index.html` na raiz deste repositório. Para uso loca
 
 O grupo **exibir mais preferências** começa fechado e pode ser aberto com mouse, Enter ou Espaço. Contém, nesta ordem:
 
-- **Modo de leitura:** checkbox desabilitado com explicação. Scripts comuns não podem acionar o leitor nativo. A [API toggleReaderMode do Firefox](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/tabs/toggleReaderMode) é uma API de extensões, indisponível para este script. Use o menu do navegador, quando disponível. Não há simulação de ativação nem modo de leitura próprio nesta versão.
 - **Pausar animações:** checkbox para pausar vídeos HTML, animações CSS (incluindo pseudoelementos) e Web Animations existentes. Desativa transições. Ao desmarcar, animações retomam, mas vídeos permanecem pausados até uma ação da pessoa.
 - **Desabilitar sons:** checkbox para silenciar elementos HTML audio/video acessíveis no documento. Mantém o estado de mute anterior e o restaura ao desmarcar.
 
@@ -111,3 +110,11 @@ A opção “exibir ícone pequeno da ferramenta” substitui o texto do botão 
 ## Estrutura do repositório
 
 O site está na raiz do repositório preferencias-a11y. O ZIP de distribuição mantém a pasta `ferramentas/` para instalação em outros sites. A página provisória index.htm foi preservada apenas no backup local, fora do controle de versão.
+
+## Camada flutuante (1.8.0)
+
+A opção “deixar esta camada flutuante”, acima de “exibir todas as preferências”, permite arrastar o painel pelo botão Mover painel com mouse ou toque. Com foco nesse botão, as setas do teclado movem o painel; os quatro botões de direção oferecem a mesma ação por clique ou toque, sem arrastar. O painel permanece nos limites visíveis e se ajusta ao redimensionar a tela. Desmarcar ou Restaurar padrão devolve a posição original. Esta escolha e a posição duram apenas até recarregar a página; fechar e reabrir mantém a posição durante a sessão da página.
+
+## Anúncios de movimento (1.8.2)
+
+Mover painel tem descrição acessível com instruções e posição aproximada em nove regiões da área disponível. Movimentos por teclado ou botões anunciam direção e posição em uma região de status educada; repetições rápidas são agrupadas. Arrastar anuncia o resultado ao soltar, sem anunciar cada pixel. Nos limites, informa que não houve movimento. A descrição de posição é atualizada ao mover, redimensionar e receber foco. A fala final depende do leitor de tela e de suas configurações; validar também com tecnologia assistiva real.

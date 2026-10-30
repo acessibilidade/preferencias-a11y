@@ -1,0 +1,72 @@
+/* Página de declaração: compartilha a identidade visual da demonstração. */
+.declaration-hero {
+  grid-template-columns: minmax(0, 1fr);
+}
+.declaration-commitment {
+  text-align: center;
+}
+.declaration-hero h1 {
+  font-size: clamp(2.5rem, 4.5vw, 4rem);
+}
+.declaration-page .section-heading {
+  max-width: 52em;
+}
+.declaration-support,
+.declaration-followup {
+  display: grid;
+  grid-template-columns: minmax(180px, 0.65fr) minmax(0, 2fr);
+  gap: 56px;
+  align-items: start;
+}
+.declaration-followup {
+  grid-template-columns: minmax(0, 2fr) minmax(180px, 0.65fr);
+}
+.declaration-portrait {
+  text-align: center;
+  padding: 20px;
+  background: #eee2f0;
+  border: 1px solid #dfcde4;
+  border-radius: 28px;
+}
+.declaration-portrait img {
+  display: block;
+  width: 100%;
+  height: 260px;
+  object-fit: contain;
+}
+.declaration-page li {
+  margin: 0;
+}
+.declaration-practices {
+  padding-left: 26px;
+  max-width: 58em;
+}
+.declaration-practices li {
+  padding-left: 6px;
+}
+.declaration-beyond h2 {
+  font-size: 1.8rem;
+}
+.declaration-updated {
+  margin: 28px 0 56px;
+  font-size: 1rem;
+  color: #6c5b70;
+}
+.declaration-page [aria-current="page"] {
+  font-weight: 700;
+}
+@media (max-width: 800px) {
+  .declaration-hero,
+  .declaration-support,
+  .declaration-followup {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 28px;
+  }
+  .declaration-portrait {
+    width: min(100%, 320px);
+    justify-self: center;
+  }
+  .declaration-support .declaration-portrait {
+    order: 2;
+  }
+}
