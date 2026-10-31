@@ -1,4 +1,4 @@
-# Preferências — versão 1.8.2
+# Preferências — versão 1.9.0
 
 Ferramenta independente inspirada nos recursos da [demonstração do Fluid Infusion](https://build-infusion.fluidproject.org/demos/prefsFramework/). Não inclui código ou dependências do Infusion. A imagem fornecida orientou o painel lateral sobreposto. Sem build, bibliotecas, fontes remotas, telemetria ou minificação.
 
@@ -118,3 +118,9 @@ A opção “deixar esta camada flutuante”, acima de “exibir todas as prefer
 ## Anúncios de movimento (1.8.2)
 
 Mover painel tem descrição acessível com instruções e posição aproximada em nove regiões da área disponível. Movimentos por teclado ou botões anunciam direção e posição em uma região de status educada; repetições rápidas são agrupadas. Arrastar anuncia o resultado ao soltar, sem anunciar cada pixel. Nos limites, informa que não houve movimento. A descrição de posição é atualizada ao mover, redimensionar e receber foco. A fala final depende do leitor de tela e de suas configurações; validar também com tecnologia assistiva real.
+
+## Controles graduais (1.9.0)
+
+Zoom, tamanho do texto e espaçamentos usam sliders nativos com passos predefinidos, valor visível e `aria-valuetext` com o valor real. As setas alteram um passo; Home e End vão aos extremos. Botões Diminuir/Aumentar permitem ajustes por clique ou toque sem arrastar. Os passos representam as opções existentes, não uma escala contínua: no zoom, por exemplo, após 200% vêm 300% e 400%. “Original” preserva o estilo do site.
+
+Destacar controles usa checkbox. Fontes, contraste e cursor mantêm seletores. Preferências salvas anteriormente continuam compatíveis; Restaurar padrão atualiza também valores visíveis e sliders. Implementação independente em JavaScript e CSS, sem Angular.

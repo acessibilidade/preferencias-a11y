@@ -1,8 +1,8 @@
-/* Preferências 1.8.2 — implementação independente, sem dependências. */
+/* Preferências 1.9.0 — implementação independente, sem dependências. */
 (() => {
   'use strict';
   const script = document.currentScript;
-  const cssURL = new URL('../css/preferencias.css?v=1.8.2', script.src).href;
+  const cssURL = new URL('../css/preferencias.css?v=1.9.0', script.src).href;
   const key = 'fm-preferencias-v1';
   const visibilityKey = `fm-preferencias-hidden-v1:${location.pathname}${location.search}`;
   const compactKey = `fm-preferencias-compact-v1:${location.pathname}${location.search}`;
@@ -98,7 +98,7 @@
             </div>
             <button type="button" class="reset">Restaurar padrão</button>
             <p class="status" role="status"></p>
-            <p class="note">Ajustar preferências não corrigem barreiras de acessibilidade do site. <span class="version">Versão 1.8.2</span></p>
+            <p class="note">Ajustar preferências não corrigem barreiras de acessibilidade do site. <span class="version">Versão 1.9.0</span></p>
             <p class="project-credit">Conheça o projeto “<a href="http://preferenciasdeacessibilidade.com/" target="_blank" rel="noopener noreferrer">Preferências de Acessibilidade<span class="sr-only"> (abre em uma nova aba)</span></a><svg class="external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>”.</p>
             <p class="project-credit">Este é um projeto de <a href="https://github.com/acessibilidade/preferencias-a11y" target="_blank" rel="noopener noreferrer">código aberto<span class="sr-only"> (abre em uma nova aba)</span></a><svg class="external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>.</p>
           </footer>
@@ -255,6 +255,8 @@
       status.textContent = compactTrigger.checked ? 'Botão de preferências exibido como ícone.' : 'Botão de preferências exibido com texto.';
     });
     const state = {};
+    const rangeNames = new Set(['zoom', 'size', 'line', 'letter', 'word']);
+    const syncRanges = new Map();
     let saved = {};
     try { saved = JSON.parse(localStorage.getItem(key)) || {}; } catch (_) { /* Storage is optional. */ }
     for (const name of Object.keys(options)) {
@@ -264,8 +266,9 @@
       const label = document.createElement('label');
       label.htmlFor = `fm-${name}`;
       label.textContent = labels[name][0];
-      const checkbox = ['bold', 'mute', 'motion'].includes(name);
-      const control = document.createElement(checkbox ? 'input' : 'select');
+      const checkbox = ['inputs', 'bold', 'mute', 'motion'].includes(name);
+      const range = rangeNames.has(name);
+      const control = document.createElement(checkbox || range ? 'input' : 'select');
       control.id = label.htmlFor;
       control.name = name;
       if (checkbox) {
@@ -274,6 +277,56 @@
         label.className = 'checkbox-label';
         label.prepend(control);
         row.append(label);
+      } else if (range) {
+        control.type = 'range';
+        control.min = '0';
+        control.max = String(options[name].length - 1);
+        control.step = '1';
+        control.className = 'preference-range';
+        const value = document.createElement('span');
+        value.className = 'range-value';
+        value.setAttribute('aria-hidden', 'true');
+        const track = document.createElement('div');
+        track.className = 'range-controls';
+        const decrease = document.createElement('button');
+        const increase = document.createElement('button');
+        decrease.type = increase.type = 'button';
+        decrease.textContent = '−';
+        increase.textContent = '+';
+        decrease.setAttribute('aria-label', `Diminuir: ${labels[name][0]}`);
+        increase.setAttribute('aria-label', `Aumentar: ${labels[name][0]}`);
+        const ticks = document.createElement('datalist');
+        ticks.id = `fm-${name}-steps`;
+        options[name].forEach((_, index) => ticks.append(new Option('', String(index))));
+        control.setAttribute('list', ticks.id);
+        const sync = () => {
+          const index = options[name].indexOf(state[name]);
+          const text = labels[name][1][index];
+          control.value = String(index);
+          control.setAttribute('aria-valuetext', text);
+          value.textContent = text;
+          decrease.setAttribute('aria-disabled', String(index === 0));
+          increase.setAttribute('aria-disabled', String(index === options[name].length - 1));
+        };
+        syncRanges.set(name, sync);
+        const update = index => {
+          state[name] = options[name][index];
+          sync();
+          apply();
+          persist();
+        };
+        [[decrease, -1], [increase, 1]].forEach(([button, delta]) => {
+          button.addEventListener('click', () => {
+            const index = options[name].indexOf(state[name]) + delta;
+            if (index < 0 || index >= options[name].length) return;
+            update(index);
+            status.textContent = `${labels[name][0]}: ${labels[name][1][index]}.`;
+          });
+        });
+        control.addEventListener('input', () => update(Number(control.value)));
+        sync();
+        track.append(decrease, control, increase);
+        row.append(label, value, track, ticks);
       } else {
         options[name].forEach((value, index) => control.add(new Option(labels[name][1][index], value)));
         control.value = state[name];
@@ -294,7 +347,7 @@
       }
       shadow.querySelector('.controls').append(row);
       if (name === 'bold') shadow.querySelector('#fm-font').parentElement.append(row);
-      control.addEventListener('change', () => {
+      if (!range) control.addEventListener('change', () => {
         state[name] = checkbox ? (control.checked ? 'on' : 'original') : control.value;
         apply();
         persist();
@@ -312,13 +365,13 @@
       configuredGroups.push({ group, names, badge });
     }
     primaryOrder.forEach(name => {
-      const row = shadow.querySelector(`#fm-${name}`).parentElement;
+      const row = shadow.querySelector(`#fm-${name}`).closest('.control');
       const group = document.createElement('details');
       group.className = 'preference-group';
       group.name = 'fm-preference-groups';
       const summary = document.createElement('summary');
       summary.textContent = labels[name][0];
-      row.querySelector('label').classList.add('sr-only');
+      if (name !== 'inputs') row.querySelector('label').classList.add('sr-only');
       group.append(summary, row);
       registerConfiguredGroup(group, name === 'font' ? ['font', 'bold'] : [name]);
       primaryControls.append(group);
@@ -468,6 +521,7 @@
         state[name] = 'original';
         const control = shadow.querySelector(`#fm-${name}`);
         if (control.type === 'checkbox') control.checked = false;
+        else if (control.type === 'range') syncRanges.get(name)();
         else control.value = 'original';
       });
       hideTrigger.checked = false;
