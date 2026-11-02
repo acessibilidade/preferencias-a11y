@@ -47,6 +47,9 @@ for source, destination in PAGES.items():
     content = re.sub(r'<link rel="canonical" href="[^"]*" />', '<link rel="canonical" href="' + url + '" />', content)
     content = re.sub(r'<meta property="og:url" content="[^"]*" />', '<meta property="og:url" content="' + url + '" />', content)
     content = content.replace('https://creativecommons.org/licenses/by-nc-sa/4.0/deed.pt-br', 'https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en')
+    content = content.replace('downloads/preferencias-a11y.zip', 'downloads/a11y-preferences-en.zip')
+    content = content.replace('<code>ferramentas</code>', '<code>a11y-preferences</code>')
+    content = content.replace('/ferramentas/js/preferencias.js', '/a11y-preferences/js/preferences.js')
     (ROOT / destination).write_text(content)
 
 catalog = json.loads((ROOT / 'translations/tool.en.json').read_text())

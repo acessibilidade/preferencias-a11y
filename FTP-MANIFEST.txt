@@ -10,6 +10,7 @@ js/language.js
 img/flag-br.svg
 img/flag-us.svg
 downloads/preferencias-a11y.zip
+downloads/a11y-preferences-en.zip
 
 Arquivos a remover da produção:
 img/cursor-black.svg
@@ -22,6 +23,7 @@ README.md
 VERIFICACAO.md
 translations/site.en.json
 translations/tool.en.json
+translations/README.en.md
 scripts/build-translations.py
 scripts/build-download.py
 FTP-MANIFEST.txt
