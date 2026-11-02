@@ -1,4 +1,4 @@
-/* Site language selection. Static pages also work without JavaScript. */
+/* Site language selection through native buttons. */
 (() => {
   'use strict';
   const storageKey = 'prefs-site-language';
@@ -11,19 +11,22 @@
   try {
     if (selected) localStorage.setItem(storageKey, selected);
     else selected = localStorage.getItem(storageKey);
-  } catch (_) { /* Language links work even when storage is unavailable. */ }
-  const destination = choices.find(link => link.dataset.language === selected);
+  } catch (_) { /* Language selection works even when storage is unavailable. */ }
+  const destination = choices.find(button => button.dataset.language === selected);
   if (destination && selected !== current) {
-    const url = new URL(destination.href);
+    const url = new URL(destination.dataset.url, location.href);
     url.hash = location.hash;
     location.replace(url.href);
     return;
   }
-  choices.forEach(link => {
-    // Explicit language links take priority over a previously saved choice.
-    link.addEventListener('click', () => {
-      try { localStorage.setItem(storageKey, link.dataset.language); }
+  choices.forEach(button => {
+    // Explicit language choices take priority over a previously saved choice.
+    button.addEventListener('click', () => {
+      try { localStorage.setItem(storageKey, button.dataset.language); }
       catch (_) { /* The destination URL still carries the chosen language. */ }
+      const url = new URL(button.dataset.url, location.href);
+      url.hash = location.hash;
+      location.assign(url.href);
     });
   });
   // Keep the selected language explicit on internal page navigation.

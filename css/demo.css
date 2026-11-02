@@ -709,7 +709,7 @@ a:focus-visible {
   flex-wrap: wrap;
   gap: 8px;
 }
-.language-switcher a {
+.language-switcher button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -720,20 +720,22 @@ a:focus-visible {
   border-radius: 12px;
   background: #fff;
   color: #35213d;
+  font-family: inherit;
   font-size: 0.95rem;
+  cursor: pointer;
   text-decoration: none;
 }
-.language-switcher a[aria-current="true"] {
+.language-switcher button[aria-pressed="true"] {
   border-color: #673679;
   background: #eee2f0;
   font-weight: 700;
   text-decoration: underline;
   text-decoration-thickness: 2px;
 }
-.language-switcher a:hover {
+.language-switcher button:hover {
   background: #f8f4fa;
 }
-.language-switcher a:focus-visible {
+.language-switcher button:focus-visible {
   outline: 3px solid #35213d;
   outline-offset: 3px;
 }
@@ -742,7 +744,7 @@ a:focus-visible {
   flex-shrink: 0;
 }
 @media (max-width: 420px) {
-  .language-switcher a {
+  .language-switcher button {
     padding: 6px 8px;
   }
 }
@@ -752,11 +754,11 @@ a:focus-visible {
   flex-shrink: 0;
   fill: currentColor;
 }
-.language-switcher a[aria-current="true"] .language-check {
+.language-switcher button[aria-pressed="true"] .language-check {
   display: block;
 }
 @media (max-width: 420px) {
-  .language-switcher a {
+  .language-switcher button {
     gap: 4px;
     padding: 6px;
   }

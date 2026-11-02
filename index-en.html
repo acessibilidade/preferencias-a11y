@@ -38,7 +38,7 @@
   <body>
     <a class="skip" href="#conteudo">
       Skip to content
-      <span class="sr-only">on this page</span>
+      <span class="sr-only">content opens on this same page</span>
     </a>
     <header class="site-header">
       <div class="brand">
@@ -80,29 +80,29 @@
       <nav aria-label="Main navigation">
         <a href="#experimente">
           Try it
-          <span class="sr-only">on this page</span>
+          <span class="sr-only">content opens on this same page</span>
         </a>
         <a href="#instalacao">
           How to install
-          <span class="sr-only">on this page</span>
+          <span class="sr-only">content opens on this same page</span>
         </a>
         <a href="#limites">
           No miracle promises
-          <span class="sr-only">on this page</span>
+          <span class="sr-only">content opens on this same page</span>
         </a>
       </nav>
-      <nav class="language-switcher" aria-label="Language">
-        <a href="index.html?lang=pt-BR" data-language="pt-BR" lang="pt-BR" hreflang="pt-BR">
+      <div role="group" class="language-switcher" aria-label="Language">
+        <button type="button" data-url="index.html?lang=pt-BR" aria-label="Alterar para português" data-language="pt-BR" lang="pt-BR" aria-pressed="false">
           <img src="img/flag-br.svg" width="36" height="26" alt="" aria-hidden="true" />
           <svg class="language-check" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" /></svg>
           <span>Português</span>
-        </a>
-        <a href="index-en.html?lang=en-US" data-language="en-US" lang="en-US" hreflang="en-US" aria-current="true">
+        </button>
+        <button type="button" data-url="index-en.html?lang=en-US" aria-label="Switch to English" data-language="en-US" lang="en-US" aria-pressed="true">
           <img src="img/flag-us.svg" width="36" height="26" alt="" aria-hidden="true" />
           <svg class="language-check" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" /></svg>
           <span>English</span>
-        </a>
-      </nav>
+        </button>
+      </div>
     </header>
     <main id="conteudo">
       <section class="hero" aria-labelledby="titulo">
@@ -112,7 +112,7 @@
           <p class="lead">Adjusting preferences does not remove accessibility barriers. These options should be free, without miracle promises.</p>
           <a class="button" href="#experimente">
             See it in action
-            <span class="sr-only">on this page</span>
+            <span class="sr-only">content opens on this same page</span>
           </a>
           <p class="hero-caption">To get started, use “show preferences” at the top right.</p>
         </div>

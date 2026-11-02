@@ -34,8 +34,8 @@ for source, destination in PAGES.items():
     content = content.replace('class="sr-only" lang="pt-BR"', 'class="sr-only" lang="en-US"')
     for pt, en in PAGES.items():
         content = content.replace('href="' + pt + '"', 'href="' + en + '"')
-    content = content.replace('hreflang="pt-BR" aria-current="true"', 'hreflang="pt-BR"')
-    content = content.replace('data-language="en-US" lang="en-US" hreflang="en-US"', 'data-language="en-US" lang="en-US" hreflang="en-US" aria-current="true"')
+    content = content.replace('lang="pt-BR" aria-pressed="true"', 'lang="pt-BR" aria-pressed="false"')
+    content = content.replace('lang="en-US" aria-pressed="false"', 'lang="en-US" aria-pressed="true"')
     # Show the English name below the original brand artwork only in English.
     subtitle = '<span class="brand-translation">A11Y Preferences</span>'
     if source == 'index.html':
