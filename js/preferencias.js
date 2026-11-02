@@ -1,8 +1,8 @@
-/* Preferências 1.9.0 — implementação independente, sem dependências. */
+/* Preferências 1.10.0 — implementação independente, sem dependências. */
 (() => {
   'use strict';
   const script = document.currentScript;
-  const cssURL = new URL('../css/preferencias.css?v=1.9.0', script.src).href;
+  const cssURL = new URL('../css/preferencias.css?v=1.10.0', script.src).href;
   const key = 'fm-preferencias-v1';
   const visibilityKey = `fm-preferencias-hidden-v1:${location.pathname}${location.search}`;
   const compactKey = `fm-preferencias-compact-v1:${location.pathname}${location.search}`;
@@ -17,14 +17,114 @@
     bold: ['original', 'on'],
     zoom: ['original', '125', '150', '175', '200', '300', '400'],
     mute: ['original', 'on'],
-    motion: ['original', 'on'],
-    cursor: ['original', 'yellow', 'blue', 'white', 'black']
+    motion: ['original', 'on']
   };
+  // BEGIN ENGLISH TRANSLATIONS
+  const english = {
+    "Tamanho do texto": "Text size",
+    "Espaçamento entre linhas": "Line spacing",
+    "Espaçamento entre letras": "Letter spacing",
+    "Espaçamento entre palavras": "Word spacing",
+    "Destacar controles": "Highlight controls",
+    "Desativado": "Off",
+    "Ativado": "On",
+    "Estilo de texto e fontes": "Text style and fonts",
+    "Fonte do sistema": "System font",
+    "Com serifa": "Serif",
+    "Cor e contraste": "Color and contrast",
+    "Preto sobre branco": "Black on white",
+    "Branco sobre preto": "White on black",
+    "Amarelo sobre preto": "Yellow on black",
+    "Sépia": "Sepia",
+    "Negrito": "Bold",
+    "Aplicar zoom": "Zoom content",
+    "Desabilitar sons": "Mute sounds",
+    "Pausar animações": "Pause animations",
+    "1,5": "1.5",
+    "1,75": "1.75",
+    "0,05 em": "0.05 em",
+    "0,10 em": "0.10 em",
+    "0,15 em": "0.15 em",
+    "0,20 em": "0.20 em",
+    "0,30 em": "0.30 em",
+    "exibir preferências": "show preferences",
+    "— abre o painel na mesma página": "— opens the panel on this page",
+    "configure do seu jeito": "make it your own",
+    "Preferências": "Preferences",
+    "Fechar preferências": "Close preferences",
+    "Fechar": "Close",
+    "Ajuste a apresentação desta página para você.": "Adjust this page's presentation to suit you.",
+    "deixar esta camada flutuante": "make this panel float",
+    "Arraste pelo botão Mover painel, use as setas do teclado nesse botão ou selecione uma direção abaixo.": "Drag using the Move panel button, use the arrow keys on that button, or choose a direction below.",
+    "Mover painel": "Move panel",
+    "Mover painel por direção": "Move panel by direction",
+    "Mover painel para a esquerda": "Move panel left",
+    "Mover painel para cima": "Move panel up",
+    "Mover painel para baixo": "Move panel down",
+    "Mover painel para a direita": "Move panel right",
+    "exibir todas as preferências": "show all preferences",
+    "exibir mais preferências": "show more preferences",
+    "exibir ícone pequeno da ferramenta": "show a small tool icon",
+    "Substitui o texto do botão pelo ícone de preferências nesta página. Desmarque para voltar a exibir o texto.": "Replaces the button text with the preferences icon on this page. Uncheck to show the text again.",
+    "não exibir o botão de preferências nessa página": "hide the preferences button on this page",
+    "Ao selecionar essa opção, após fechar a ferramenta o botão não será mais exibido. Para o botão ser exibido novamente, será preciso limpar o cache do navegador, incluindo os dados deste site.": "If you select this option, the button will no longer appear after you close the tool. To show it again, clear your browser's cache, including this site's data.",
+    "Restaurar padrão": "Restore defaults",
+    "Ajustar preferências não corrigem barreiras de acessibilidade do site.": "Adjusting preferences does not fix the site's accessibility barriers.",
+    "Versão 1.10.0": "Version 1.10.0",
+    "Conheça o projeto “": "Explore the project “",
+    "Preferências de Acessibilidade": "Accessibility Preferences",
+    "(abre em uma nova aba)": "(opens in a new tab)",
+    "Este é um projeto de": "This project is",
+    "código aberto": "open source",
+    "canto superior esquerdo": "top left",
+    "centro superior": "top center",
+    "canto superior direito": "top right",
+    "centro à esquerda": "center left",
+    "centro": "center",
+    "centro à direita": "center right",
+    "canto inferior esquerdo": "bottom left",
+    "centro inferior": "bottom center",
+    "canto inferior direito": "bottom right",
+    "à esquerda": "on the left",
+    "à direita": "on the right",
+    "acima": "at the top",
+    "abaixo": "at the bottom",
+    "O painel não foi movido.": "The panel did not move.",
+    "para a esquerda": "left",
+    "para a direita": "right",
+    "para cima": "up",
+    "para baixo": "down",
+    " e ": " and ",
+    "Painel flutuante ativado.": "Floating panel enabled.",
+    "Painel devolvido à posição original.": "Panel returned to its original position.",
+    "Botão de preferências exibido como ícone.": "Preferences button displayed as an icon.",
+    "Botão de preferências exibido com texto.": "Preferences button displayed with text.",
+    "Amplia o conteúdo do site. O painel mantém seu tamanho. Não altera o zoom nativo do navegador.": "Enlarges the site's content. The panel keeps its size. Does not change the browser's native zoom.",
+    "Silencia áudios e vídeos HTML desta página. Não controla Web Audio nem players de terceiros em iframes.": "Mutes HTML audio and video on this page. Does not control Web Audio or third-party players in iframes.",
+    "Pausa vídeos HTML e animações CSS/Web Animations. GIFs, canvas, animações por scripts e iframes podem continuar. Vídeos não reiniciam automaticamente ao desmarcar.": "Pauses HTML videos and CSS/Web Animations. GIFs, canvas, scripted animations, and iframes may continue. Videos do not resume automatically when unchecked.",
+    "Configurado": "Configured",
+    "Alterações aplicadas nesta página.": "Changes applied to this page.",
+    " O navegador não permitiu salvar as preferências.": " The browser did not allow preferences to be saved.",
+    "Preferências restauradas.": "Preferences restored.",
+    "Preferências salvas apenas neste navegador, por site.": "Preferences saved only in this browser, per site.",
+    "Diminuir: {label}": "Decrease: {label}",
+    "Aumentar: {label}": "Increase: {label}",
+    "Posição aproximada: {position} da área disponível da tela.": "Approximate position: {position} of the available screen area.",
+    "Limite {direction} atingido. O painel não foi movido.": "Boundary {direction} reached. The panel did not move.",
+    "Painel movido {directions}.": "Panel moved {directions}."
+  };
+  // END ENGLISH TRANSLATIONS
   function init() {
+    const isEnglish = (script.dataset.lang || document.documentElement.lang).toLowerCase().startsWith('en');
+    function t(message, values = {}) {
+      const translated = isEnglish ? (english[message] || message) : message;
+      return translated.replace(/\{(\w+)\}/g, (_, name) => values[name] ?? `{${name}}`);
+    }
     if (document.getElementById('fm-preferences')) return;
     const root = document.documentElement;
     const host = document.createElement('div');
     host.id = 'fm-preferences';
+    host.lang = isEnglish ? 'en-US' : 'pt-BR';
     const shadow = host.attachShadow({ mode: 'open' });
     const sheet = document.createElement('link');
     sheet.rel = 'stylesheet';
@@ -33,74 +133,73 @@
     const panelSheet = sheet.cloneNode();
     shadow.append(panelSheet);
     const labels = {
-      size: ['Tamanho do texto', ['Original (100%)', '125%', '150%', '175%', '200%']],
-      line: ['Espaçamento entre linhas', ['Original', '1,5', '1,75', '2']],
-      letter: ['Espaçamento entre letras', ['Original', '0,05 em', '0,10 em', '0,15 em']],
-      word: ['Espaçamento entre palavras', ['Original', '0,10 em', '0,20 em', '0,30 em']],
-      inputs: ['Destacar controles', ['Desativado', 'Ativado']],
-      font: ['Estilo de texto e fontes', ['Original', 'Fonte do sistema', 'Com serifa', 'Arial', 'Atkinson', 'Lexend', 'Open Sans', 'Verdana']],
-      contrast: ['Cor e contraste', ['Original', 'Preto sobre branco', 'Branco sobre preto', 'Amarelo sobre preto', 'Sépia']],
-      bold: ['Negrito', []],
-      zoom: ['Aplicar zoom', ['Original (100%)', '125%', '150%', '175%', '200%', '300%', '400%']],
-      mute: ['Desabilitar sons', []],
-      motion: ['Pausar animações', []],
-      cursor: ['Cor do cursor', ['Original', 'Amarelo', 'Azul', 'Branco', 'Preto']]
+      size: [t('Tamanho do texto'), ['Original (100%)', '125%', '150%', '175%', '200%']],
+      line: [t('Espaçamento entre linhas'), ['Original', t('1,5'), t('1,75'), '2']],
+      letter: [t('Espaçamento entre letras'), ['Original', t('0,05 em'), t('0,10 em'), t('0,15 em')]],
+      word: [t('Espaçamento entre palavras'), ['Original', t('0,10 em'), t('0,20 em'), t('0,30 em')]],
+      inputs: [t('Destacar controles'), [t('Desativado'), t('Ativado')]],
+      font: [t('Estilo de texto e fontes'), ['Original', t('Fonte do sistema'), t('Com serifa'), 'Arial', 'Atkinson', 'Lexend', 'Open Sans', 'Verdana']],
+      contrast: [t('Cor e contraste'), ['Original', t('Preto sobre branco'), t('Branco sobre preto'), t('Amarelo sobre preto'), t('Sépia')]],
+      bold: [t('Negrito'), []],
+      zoom: [t('Aplicar zoom'), ['Original (100%)', '125%', '150%', '175%', '200%', '300%', '400%']],
+      mute: [t('Desabilitar sons'), []],
+      motion: [t('Pausar animações'), []]
     };
     const container = document.createElement('div');
     container.innerHTML = `
-      <a class="trigger" href="#fm-panel" tabindex="0" aria-controls="fm-panel" aria-expanded="false"><span class="trigger-label">exibir preferências</span><svg class="trigger-icon" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M480-720q-33 0-56.5-23.5T400-800q0-33 23.5-56.5T480-880q33 0 56.5 23.5T560-800q0 33-23.5 56.5T480-720ZM360-120v-480q-68-6-127-16t-113-24l20-80q75 20 159 30t181 10q97 0 181-10t159-30l20 80q-54 14-113 24t-127 16v480h-80v-240h-80v240h-80Zm440-320q-17 0-28.5-11.5T760-480q0-17 11.5-28.5T800-520q17 0 28.5 11.5T840-480q0 17-11.5 28.5T800-440Zm0 160q-17 0-28.5-11.5T760-320q0-17 11.5-28.5T800-360q17 0 28.5 11.5T840-320q0 17-11.5 28.5T800-280Zm0 160q-17 0-28.5-11.5T760-160q0-17 11.5-28.5T800-200q17 0 28.5 11.5T840-160q0 17-11.5 28.5T800-120Z"/></svg><span class="sr-only"> — abre o painel na mesma página</span></a>
+      <a class="trigger" href="#fm-panel" tabindex="0" aria-controls="fm-panel" aria-expanded="false"><span class="trigger-label">${t("exibir preferências")}</span><svg class="trigger-icon" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M480-720q-33 0-56.5-23.5T400-800q0-33 23.5-56.5T480-880q33 0 56.5 23.5T560-800q0 33-23.5 56.5T480-720ZM360-120v-480q-68-6-127-16t-113-24l20-80q75 20 159 30t181 10q97 0 181-10t159-30l20 80q-54 14-113 24t-127 16v480h-80v-240h-80v240h-80Zm440-320q-17 0-28.5-11.5T760-480q0-17 11.5-28.5T800-520q17 0 28.5 11.5T840-480q0 17-11.5 28.5T800-440Zm0 160q-17 0-28.5-11.5T760-320q0-17 11.5-28.5T800-360q17 0 28.5 11.5T840-320q0 17-11.5 28.5T800-280Zm0 160q-17 0-28.5-11.5T760-160q0-17 11.5-28.5T800-200q17 0 28.5 11.5T840-160q0 17-11.5 28.5T800-120Z"/></svg><span class="sr-only"> ${t("— abre o painel na mesma página")}</span></a>
       <section id="fm-panel" class="panel" aria-labelledby="fm-title" hidden>
         <header class="panel-header">
-          <div><p class="eyebrow">configure do seu jeito</p><h2 id="fm-title" tabindex="-1">Preferências</h2></div>
-          <button type="button" class="close" aria-label="Fechar preferências">Fechar</button>
+          <div><p class="eyebrow">${t("configure do seu jeito")}</p><h2 id="fm-title" tabindex="-1">${t("Preferências")}</h2></div>
+          <button type="button" class="close" aria-label="${t("Fechar preferências")}">${t("Fechar")}</button>
         </header>
         <div class="panel-content">
-          <p class="intro">Ajuste a apresentação desta página para você.</p>
+          <p class="intro">${t("Ajuste a apresentação desta página para você.")}</p>
           <label class="show-all checkbox-label" for="fm-floating">
             <input id="fm-floating" type="checkbox" aria-describedby="fm-floating-help">
-            <span>deixar esta camada flutuante</span>
+            <span>${t("deixar esta camada flutuante")}</span>
           </label>
           <div class="floating-controls" hidden>
-            <p id="fm-floating-help">Arraste pelo botão Mover painel, use as setas do teclado nesse botão ou selecione uma direção abaixo.</p>
-            <button type="button" class="move-handle" aria-describedby="fm-panel-position fm-floating-help">Mover painel</button>
+            <p id="fm-floating-help">${t("Arraste pelo botão Mover painel, use as setas do teclado nesse botão ou selecione uma direção abaixo.")}</p>
+            <button type="button" class="move-handle" aria-describedby="fm-panel-position fm-floating-help">${t("Mover painel")}</button>
             <p id="fm-panel-position" class="sr-only"></p>
             <p class="sr-only move-status" role="status" aria-live="polite" aria-atomic="true"></p>
-            <div class="move-directions" role="group" aria-label="Mover painel por direção">
-              <button type="button" data-move="left" aria-label="Mover painel para a esquerda">←</button>
-              <button type="button" data-move="up" aria-label="Mover painel para cima">↑</button>
-              <button type="button" data-move="down" aria-label="Mover painel para baixo">↓</button>
-              <button type="button" data-move="right" aria-label="Mover painel para a direita">→</button>
+            <div class="move-directions" role="group" aria-label="${t("Mover painel por direção")}">
+              <button type="button" data-move="left" aria-label="${t("Mover painel para a esquerda")}">←</button>
+              <button type="button" data-move="up" aria-label="${t("Mover painel para cima")}">↑</button>
+              <button type="button" data-move="down" aria-label="${t("Mover painel para baixo")}">↓</button>
+              <button type="button" data-move="right" aria-label="${t("Mover painel para a direita")}">→</button>
             </div>
           </div>
           <label class="show-all checkbox-label" for="fm-show-all">
             <input id="fm-show-all" type="checkbox">
-            <span>exibir todas as preferências</span>
+            <span>${t("exibir todas as preferências")}</span>
           </label>
           <div class="controls"></div>
           <details class="more-preferences">
-            <summary>exibir mais preferências</summary>
+            <summary>${t("exibir mais preferências")}</summary>
             <div class="extra-controls"></div>
           </details>
           <footer>
             <div class="visibility-option">
               <label class="visibility-label" for="fm-compact-trigger">
                 <input id="fm-compact-trigger" type="checkbox" aria-describedby="fm-compact-help">
-                <span>exibir ícone pequeno da ferramenta</span>
+                <span>${t("exibir ícone pequeno da ferramenta")}</span>
               </label>
-              <p id="fm-compact-help">Substitui o texto do botão pelo ícone de preferências nesta página. Desmarque para voltar a exibir o texto.</p>
+              <p id="fm-compact-help">${t("Substitui o texto do botão pelo ícone de preferências nesta página. Desmarque para voltar a exibir o texto.")}</p>
             </div>
             <div class="visibility-option">
               <label class="visibility-label" for="fm-hide-trigger">
                 <input id="fm-hide-trigger" type="checkbox" aria-describedby="fm-hide-help">
-                <span>não exibir o botão de preferências nessa página</span>
+                <span>${t("não exibir o botão de preferências nessa página")}</span>
               </label>
-              <p id="fm-hide-help">Ao selecionar essa opção, após fechar a ferramenta o botão não será mais exibido. Para o botão ser exibido novamente, será preciso limpar o cache do navegador, incluindo os dados deste site.</p>
+              <p id="fm-hide-help">${t("Ao selecionar essa opção, após fechar a ferramenta o botão não será mais exibido. Para o botão ser exibido novamente, será preciso limpar o cache do navegador, incluindo os dados deste site.")}</p>
             </div>
-            <button type="button" class="reset">Restaurar padrão</button>
+            <button type="button" class="reset">${t("Restaurar padrão")}</button>
             <p class="status" role="status"></p>
-            <p class="note">Ajustar preferências não corrigem barreiras de acessibilidade do site. <span class="version">Versão 1.9.0</span></p>
-            <p class="project-credit">Conheça o projeto “<a href="http://preferenciasdeacessibilidade.com/" target="_blank" rel="noopener noreferrer">Preferências de Acessibilidade<span class="sr-only"> (abre em uma nova aba)</span></a><svg class="external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>”.</p>
-            <p class="project-credit">Este é um projeto de <a href="https://github.com/acessibilidade/preferencias-a11y" target="_blank" rel="noopener noreferrer">código aberto<span class="sr-only"> (abre em uma nova aba)</span></a><svg class="external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>.</p>
+            <p class="note">${t("Ajustar preferências não corrigem barreiras de acessibilidade do site.")} <span class="version">${t("Versão 1.10.0")}</span></p>
+            <p class="project-credit">${t("Conheça o projeto “")}<a href="http://preferenciasdeacessibilidade.com/" target="_blank" rel="noopener noreferrer">${t("Preferências de Acessibilidade")}<span class="sr-only"> ${t("(abre em uma nova aba)")}</span></a><svg class="external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>”.</p>
+            <p class="project-credit">${t("Este é um projeto de")} <a href="https://github.com/acessibilidade/preferencias-a11y" target="_blank" rel="noopener noreferrer">${t("código aberto")}<span class="sr-only"> ${t("(abre em uma nova aba)")}</span></a><svg class="external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>.</p>
           </footer>
         </div>
       </section>`;
@@ -131,11 +230,11 @@
       const column = x < 0.33 ? 0 : x > 0.67 ? 2 : 1;
       const row = y < 0.33 ? 0 : y > 0.67 ? 2 : 1;
       const regions = [
-        ['canto superior esquerdo', 'centro superior', 'canto superior direito'],
-        ['centro à esquerda', 'centro', 'centro à direita'],
-        ['canto inferior esquerdo', 'centro inferior', 'canto inferior direito']
+        [t('canto superior esquerdo'), t('centro superior'), t('canto superior direito')],
+        [t('centro à esquerda'), t('centro'), t('centro à direita')],
+        [t('canto inferior esquerdo'), t('centro inferior'), t('canto inferior direito')]
       ];
-      const text = `Posição aproximada: ${regions[row][column]} da área disponível da tela.`;
+      const text = t('Posição aproximada: {position} da área disponível da tela.', { position: regions[row][column] });
       positionDescription.textContent = text;
       return text;
     }
@@ -152,14 +251,14 @@
       const dx = after.left - before.left;
       const dy = after.top - before.top;
       if (Math.abs(dx) < 1 && Math.abs(dy) < 1) {
-        const names = { left: 'à esquerda', right: 'à direita', up: 'acima', down: 'abaixo' };
-        announceMovement(direction ? `Limite ${names[direction]} atingido. O painel não foi movido.` : 'O painel não foi movido.');
+        const names = { left: t('à esquerda'), right: t('à direita'), up: t('acima'), down: t('abaixo') };
+        announceMovement(direction ? t('Limite {direction} atingido. O painel não foi movido.', { direction: names[direction] }) : t('O painel não foi movido.'));
         return;
       }
       const movements = [];
-      if (Math.abs(dx) >= 1) movements.push(dx < 0 ? 'para a esquerda' : 'para a direita');
-      if (Math.abs(dy) >= 1) movements.push(dy < 0 ? 'para cima' : 'para baixo');
-      announceMovement(`Painel movido ${movements.join(' e ')}.`);
+      if (Math.abs(dx) >= 1) movements.push(dx < 0 ? t('para a esquerda') : t('para a direita'));
+      if (Math.abs(dy) >= 1) movements.push(dy < 0 ? t('para cima') : t('para baixo'));
+      announceMovement(t('Painel movido {directions}.', { directions: movements.join(t(' e ')) }));
     }
 
     function positionPanel(x, y) {
@@ -200,7 +299,7 @@
     }
     floating.addEventListener('change', () => {
       setFloating(floating.checked);
-      status.textContent = floating.checked ? 'Painel flutuante ativado.' : 'Painel devolvido à posição original.';
+      status.textContent = floating.checked ? t('Painel flutuante ativado.') : t('Painel devolvido à posição original.');
     });
     moveHandle.addEventListener('pointerdown', event => {
       if (!floating.checked || !event.isPrimary || event.button !== 0) return;
@@ -252,7 +351,7 @@
     compactTrigger.addEventListener('change', () => {
       applyCompactTrigger();
       try { localStorage.setItem(compactKey, String(compactTrigger.checked)); } catch (_) { /* Optional storage. */ }
-      status.textContent = compactTrigger.checked ? 'Botão de preferências exibido como ícone.' : 'Botão de preferências exibido com texto.';
+      status.textContent = compactTrigger.checked ? t('Botão de preferências exibido como ícone.') : t('Botão de preferências exibido com texto.');
     });
     const state = {};
     const rangeNames = new Set(['zoom', 'size', 'line', 'letter', 'word']);
@@ -293,8 +392,8 @@
         decrease.type = increase.type = 'button';
         decrease.textContent = '−';
         increase.textContent = '+';
-        decrease.setAttribute('aria-label', `Diminuir: ${labels[name][0]}`);
-        increase.setAttribute('aria-label', `Aumentar: ${labels[name][0]}`);
+        decrease.setAttribute('aria-label', t('Diminuir: {label}', { label: labels[name][0] }));
+        increase.setAttribute('aria-label', t('Aumentar: {label}', { label: labels[name][0] }));
         const ticks = document.createElement('datalist');
         ticks.id = `fm-${name}-steps`;
         options[name].forEach((_, index) => ticks.append(new Option('', String(index))));
@@ -333,9 +432,9 @@
         row.append(label, control);
       }
       const help = {
-        zoom: 'Amplia o conteúdo do site. O painel mantém seu tamanho. Não altera o zoom nativo do navegador.',
-        mute: 'Silencia áudios e vídeos HTML desta página. Não controla Web Audio nem players de terceiros em iframes.',
-        motion: 'Pausa vídeos HTML e animações CSS/Web Animations. GIFs, canvas, animações por scripts e iframes podem continuar. Vídeos não reiniciam automaticamente ao desmarcar.'
+        zoom: t('Amplia o conteúdo do site. O painel mantém seu tamanho. Não altera o zoom nativo do navegador.'),
+        mute: t('Silencia áudios e vídeos HTML desta página. Não controla Web Audio nem players de terceiros em iframes.'),
+        motion: t('Pausa vídeos HTML e animações CSS/Web Animations. GIFs, canvas, animações por scripts e iframes podem continuar. Vídeos não reiniciam automaticamente ao desmarcar.')
       };
       if (help[name]) {
         const description = document.createElement('p');
@@ -353,13 +452,13 @@
         persist();
       });
     }
-    const primaryOrder = ['zoom', 'contrast', 'inputs', 'font', 'size', 'line', 'letter', 'word', 'cursor'];
+    const primaryOrder = ['zoom', 'contrast', 'inputs', 'font', 'size', 'line', 'letter', 'word'];
     const primaryControls = shadow.querySelector('.controls');
     const configuredGroups = [];
     function registerConfiguredGroup(group, names) {
       const badge = document.createElement('span');
       badge.className = 'configured-badge';
-      badge.textContent = 'Configurado';
+      badge.textContent = t('Configurado');
       badge.hidden = true;
       group.querySelector('summary').append(' ', badge);
       configuredGroups.push({ group, names, badge });
@@ -470,11 +569,11 @@
         group.classList.toggle('is-configured', configured);
       });
       applyMedia();
-      status.textContent = 'Alterações aplicadas nesta página.';
+      status.textContent = t('Alterações aplicadas nesta página.');
     }
     function persist() {
       try { localStorage.setItem(key, JSON.stringify(state)); }
-      catch (_) { status.textContent += ' O navegador não permitiu salvar as preferências.'; }
+      catch (_) { status.textContent += t(' O navegador não permitiu salvar as preferências.'); }
     }
     function close(restoreFocus = true) {
       stopDragging();
@@ -530,11 +629,11 @@
       try { localStorage.removeItem(compactKey); } catch (_) { /* Optional persistence. */ }
       apply();
       try { localStorage.removeItem(key); } catch (_) { /* Optional persistence. */ }
-      status.textContent = 'Preferências restauradas.';
+      status.textContent = t('Preferências restauradas.');
     });
     apply();
-    if (status.textContent === 'Alterações aplicadas nesta página.') {
-      status.textContent = 'Preferências salvas apenas neste navegador, por site.';
+    if (status.textContent === t('Alterações aplicadas nesta página.')) {
+      status.textContent = t('Preferências salvas apenas neste navegador, por site.');
     }
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init, { once: true });

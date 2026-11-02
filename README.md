@@ -1,4 +1,4 @@
-# Preferências — versão 1.9.0
+# Preferências — versão 1.10.0
 
 Ferramenta independente inspirada nos recursos da [demonstração do Fluid Infusion](https://build-infusion.fluidproject.org/demos/prefsFramework/). Não inclui código ou dependências do Infusion. A imagem fornecida orientou o painel lateral sobreposto. Sem build, bibliotecas, fontes remotas, telemetria ou minificação.
 
@@ -9,10 +9,6 @@ Baixe `downloads/preferencias-a11y.zip`, extraia e copie os arquivos, preservand
 - `ferramentas/js/preferencias.js`
 - `ferramentas/css/preferencias.css`
 - `ferramentas/fonts/` (fontes e licenças)
-- `ferramentas/img/cursor-yellow.svg`
-- `ferramentas/img/cursor-blue.svg`
-- `ferramentas/img/cursor-white.svg`
-- `ferramentas/img/cursor-black.svg`
 
 Inclua no `head` de cada página ou no template compartilhado:
 
@@ -20,7 +16,7 @@ Inclua no `head` de cada página ou no template compartilhado:
 <script src="/ferramentas/js/preferencias.js" defer></script>
 ```
 
-Uma linha no HTML; JavaScript, CSS, fontes locais e quatro pequenos SVGs de cursor hospedados. O CSS é resolvido em relação ao endereço do script (inclusive em outro domínio, se a política do site permitir). Em hospedagens em subpastas, ajuste o caminho do script. Prefira hospedar no próprio site. Não precisa de chamada adicional ou inicialização inline. Não renomeie/mova apenas um dos arquivos sem ajustar o caminho no JS.
+Uma linha no HTML; JavaScript, CSS e fontes locais hospedados. O CSS é resolvido em relação ao endereço do script (inclusive em outro domínio, se a política do site permitir). Em hospedagens em subpastas, ajuste o caminho do script. Prefira hospedar no próprio site. Não precisa de chamada adicional ou inicialização inline. Não renomeie/mova apenas um dos arquivos sem ajustar o caminho no JS.
 
 A demonstração está em `index.html` na raiz deste repositório. Para uso local, inicie um servidor HTTP na raiz do projeto (`python3 -m http.server 8765`) e acesse `http://localhost:8765/`.
 
@@ -34,7 +30,6 @@ A demonstração está em `index.html` na raiz deste repositório. Para uso loca
 6. **Espaçamento entre linhas:** 1,5; 1,75; 2.
 7. **Espaçamento entre letras:** 0,05; 0,10; 0,15 em.
 8. **Espaçamento entre palavras:** 0,10; 0,20; 0,30 em.
-9. **Cor do cursor:** Original, amarelo, azul, branco e preto; altera o ponteiro dentro da página, incluindo o painel, usando SVG de 32 px com contorno contrastante. Não altera a interface do navegador ou o cursor do sistema operacional.
 
 O grupo **exibir mais preferências** começa fechado e pode ser aberto com mouse, Enter ou Espaço. Contém, nesta ordem:
 
@@ -57,7 +52,7 @@ As escolhas são salvas na chave `fm-preferencias-v1` do `localStorage`, por ori
 - Os temas trocam cores e removem imagens de fundo: essas imagens não devem ser a única forma de transmitir conteúdo. Imagens HTML, vídeos e SVG permanecem intactos. Pseudoelementos e estilos inline prioritários podem exigir adaptação.
 - O painel é isolado via Shadow DOM; o zoom do navegador continua disponível. Seu tamanho visual não acompanha a preferência de tamanho do conteúdo.
 - O link fixo pode coincidir com menus do seu site; ajuste `:host .trigger` e `:host .panel` em `css/preferencias.css` conforme a integração. Transformações em `body`/ancestrais podem alterar o posicionamento de elementos fixos.
-- CSP: permita a origem dos arquivos em `script-src`, `style-src` e `img-src` (cursores). Não exige `unsafe-inline` ou `eval`. O CSS é usado tanto no documento quanto no painel, normalmente com reaproveitamento de cache pelo navegador.
+- CSP: permita a origem dos arquivos em `script-src`, `style-src` e `font-src`. Não exige `unsafe-inline` ou `eval`. O CSS é usado tanto no documento quanto no painel, normalmente com reaproveitamento de cache pelo navegador.
 
 ## Verificação recomendada em cada site
 
@@ -77,7 +72,7 @@ A ocultação usa uma chave `fm-preferencias-hidden-v1:` acrescida do caminho e 
 
 Não é possível prometer controle sobre todos os sons e movimentos de qualquer site. Iframes, componentes Shadow DOM isolados, Web Audio, fala sintetizada, GIF/APNG/WebP animados, SVG animado por SMIL, canvas e animações implementadas em loops JavaScript precisam de integração própria. Web Animations criadas posteriormente por scripts sem mudança no DOM podem não ser capturadas; desative e reative a opção. Nenhum protótipo global ou API nativa é sobrescrito.
 
-Um MutationObserver de adição de elementos opera apenas enquanto silenciar ou pausar está ativo; percorre os novos ramos para encontrar mídia, sem varredura contínua por temporizador. Eventos de play/volumechange impedem a retomada comum de vídeos e som enquanto selecionados. A aplicação ocorre por eventos e não é um bloqueio de áudio em nível de sistema. Ao restaurar, o observador é desconectado e os estados anteriores de mute são restaurados. Os SVGs são carregados conforme a seleção do cursor.
+Um MutationObserver de adição de elementos opera apenas enquanto silenciar ou pausar está ativo; percorre os novos ramos para encontrar mídia, sem varredura contínua por temporizador. Eventos de play/volumechange impedem a retomada comum de vídeos e som enquanto selecionados. A aplicação ocorre por eventos e não é um bloqueio de áudio em nível de sistema. Ao restaurar, o observador é desconectado e os estados anteriores de mute são restaurados.
 
 A pasta `testes/` contém uma página de verificação manual, CSS, JS e uma mídia WAV silenciosa usada tanto em audio quanto em video; é somente de desenvolvimento e não deve ser publicada. Ela permite testar reprodução, novas mídias, tentativas de reativação e ler os estados reais das animações/mídias.
 
@@ -101,7 +96,7 @@ Personagens: Open Peeps, Pablo Stanley, CC0 — https://www.openpeeps.com/. Íco
 
 ## Rótulos de valores originais (1.7.2)
 
-Tamanho do texto e zoom exibem `Original (100%)`, indicando a apresentação original, sem ajuste aplicado pela ferramenta. Espaçamentos, fonte, cores e cursor mantêm `Original`: o estilo original pode variar entre elementos e sites, portanto não há um valor numérico único a informar.
+Tamanho do texto e zoom exibem `Original (100%)`, indicando a apresentação original, sem ajuste aplicado pela ferramenta. Espaçamentos, fonte e cores mantêm `Original`: o estilo original pode variar entre elementos e sites, portanto não há um valor numérico único a informar.
 
 ## Botão compacto (1.7.2)
 
@@ -123,4 +118,16 @@ Mover painel tem descrição acessível com instruções e posição aproximada 
 
 Zoom, tamanho do texto e espaçamentos usam sliders nativos com passos predefinidos, valor visível e `aria-valuetext` com o valor real. As setas alteram um passo; Home e End vão aos extremos. Botões Diminuir/Aumentar permitem ajustes por clique ou toque sem arrastar. Os passos representam as opções existentes, não uma escala contínua: no zoom, por exemplo, após 200% vêm 300% e 400%. “Original” preserva o estilo do site.
 
-Destacar controles usa checkbox. Fontes, contraste e cursor mantêm seletores. Preferências salvas anteriormente continuam compatíveis; Restaurar padrão atualiza também valores visíveis e sliders. Implementação independente em JavaScript e CSS, sem Angular.
+Destacar controles usa checkbox. Fontes e contraste mantêm seletores. Preferências salvas anteriormente continuam compatíveis; Restaurar padrão atualiza também valores visíveis e sliders. Implementação independente em JavaScript e CSS, sem Angular.
+
+## Atualização 1.9.1
+
+Removida a opção de cor do cursor e seus SVGs. Preferências antigas de cursor são ignoradas; os demais ajustes salvos continuam disponíveis.
+
+## Idiomas (1.10.0)
+
+O site oferece Português e English no cabeçalho, com bandeiras SVG decorativas e nomes de idiomas visíveis. A página principal e a declaração possuem versões HTML estáticas em inglês (`index-en.html` e `accessibility-statement.html`), que também funcionam sem JavaScript. A escolha é lembrada no navegador quando o armazenamento está disponível. Os links de idioma explícitos prevalecem sobre a escolha salva.
+
+A ferramenta acompanha o atributo `lang` do documento: `en`/`en-US` seleciona inglês; os demais valores mantêm português. É possível definir `data-lang="en"` ou `data-lang="pt-BR"` no script de instalação para escolher apenas o idioma da ferramenta. Os textos de controles, instruções, opções, estados, mensagens de movimento e nomes acessíveis são traduzidos, sem alterar os valores das preferências salvas. As traduções estão incorporadas ao JavaScript distribuído, sem requisição adicional.
+
+Para atualizar traduções, edite `translations/site.en.json` e `translations/tool.en.json` e execute `python3 scripts/build-translations.py`. Os arquivos HTML em português são as fontes das páginas inglesas; não edite diretamente as páginas geradas. O gerador preserva tags em uma linha e indentação de dois espaços. Após modificar a ferramenta, execute `python3 scripts/build-download.py` para atualizar o ZIP de distribuição.

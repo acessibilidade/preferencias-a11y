@@ -26,11 +26,15 @@
     <link rel="manifest" href="img/favicon/site.webmanifest" />
     <link rel="canonical" href="https://preferenciasdeacessibilidade.com/declaracao-acessibilidade.html" />
     <meta property="og:url" content="https://preferenciasdeacessibilidade.com/declaracao-acessibilidade.html" />
+    <link rel="alternate" hreflang="pt-BR" href="https://preferenciasdeacessibilidade.com/declaracao-acessibilidade.html" />
+    <link rel="alternate" hreflang="en-US" href="https://preferenciasdeacessibilidade.com/accessibility-statement.html" />
+    <link rel="alternate" hreflang="x-default" href="https://preferenciasdeacessibilidade.com/declaracao-acessibilidade.html" />
     <link rel="stylesheet" href="css/demo.css" />
     <link rel="stylesheet" href="css/declaracao.css" />
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-C42TWWLW29"></script>
     <script src="js/analytics.js" defer></script>
-    <script src="js/preferencias.js" defer></script>
+    <script src="js/language.js" defer></script>
+    <script src="js/preferencias.js?v=1.10.0" defer></script>
   </head>
   <body class="declaration-page">
     <a class="skip" href="#conteudo">
@@ -48,6 +52,18 @@
         <a href="#contato">
           Relatar uma barreira
           <span class="sr-only">nesta página</span>
+        </a>
+      </nav>
+      <nav class="language-switcher" aria-label="Idioma">
+        <a href="declaracao-acessibilidade.html?lang=pt-BR" data-language="pt-BR" lang="pt-BR" hreflang="pt-BR" aria-current="true">
+          <img src="img/flag-br.svg" width="36" height="26" alt="" aria-hidden="true" />
+          <svg class="language-check" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" /></svg>
+          <span>Português</span>
+        </a>
+        <a href="accessibility-statement.html?lang=en-US" data-language="en-US" lang="en-US" hreflang="en-US">
+          <img src="img/flag-us.svg" width="36" height="26" alt="" aria-hidden="true" />
+          <svg class="language-check" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" /></svg>
+          <span>English</span>
         </a>
       </nav>
     </header>

@@ -414,27 +414,6 @@ html[data-fm-zoom="400"] body {
 html[data-fm-zoom="400"] #fm-preferences {
   zoom: 0.25;
 }
-html[data-fm-cursor="yellow"] {
-  --fm-cursor: url("../img/cursor-yellow.svg") 2 2, auto;
-}
-html[data-fm-cursor="blue"] {
-  --fm-cursor: url("../img/cursor-blue.svg") 2 2, auto;
-}
-html[data-fm-cursor="white"] {
-  --fm-cursor: url("../img/cursor-white.svg") 2 2, auto;
-}
-html[data-fm-cursor="black"] {
-  --fm-cursor: url("../img/cursor-black.svg") 2 2, auto;
-}
-html[data-fm-cursor],
-html[data-fm-cursor] body * {
-  cursor: var(--fm-cursor) !important;
-}
-:host *,
-:host .trigger {
-  cursor: var(--fm-cursor, auto);
-}
-
 :host .more-preferences {
   margin: 0 14px 16px;
   border: 1px solid #ad95b5;
@@ -535,14 +514,14 @@ html[data-fm-font="open-sans"] {
   --fm-font: "Open Sans", sans-serif;
 }
 
-/* Keep the selected cursor; otherwise show the native link/action pointer. */
+/* Native pointers for interactive controls. */
 :host button,
 :host summary {
-  cursor: var(--fm-cursor, pointer);
+  cursor: pointer;
 }
 
 :host .external-icon {
-  cursor: var(--fm-cursor, default);
+  cursor: default;
 }
 
 :host .project-credit a:hover,
@@ -572,7 +551,7 @@ html[data-fm-font="open-sans"] {
   color: #321b37;
 }
 
-/* Links remain recognizable as links even when a custom cursor is selected. */
+/* Native pointer for links. */
 :host a[href],
 :host a[href] * {
   cursor: pointer !important;
@@ -683,7 +662,7 @@ html[data-fm-font="open-sans"] {
   height: 44px;
   margin: 0;
   accent-color: #673679;
-  cursor: var(--fm-cursor, pointer);
+  cursor: pointer;
 }
 :host .range-controls button:hover {
   background: #eee2f0;

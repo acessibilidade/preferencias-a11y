@@ -1,0 +1,29 @@
+Arquivos a enviar, relativos à raiz do site (ajustes acumulados nesta conversa):
+index.html
+index-en.html
+declaracao-acessibilidade.html
+accessibility-statement.html
+css/demo.css
+css/preferencias.css
+js/preferencias.js
+js/language.js
+img/flag-br.svg
+img/flag-us.svg
+downloads/preferencias-a11y.zip
+
+Arquivos a remover da produção:
+img/cursor-black.svg
+img/cursor-blue.svg
+img/cursor-white.svg
+img/cursor-yellow.svg
+
+Fontes e documentação de desenvolvimento; não enviar para produção:
+README.md
+VERIFICACAO.md
+translations/site.en.json
+translations/tool.en.json
+scripts/build-translations.py
+scripts/build-download.py
+FTP-MANIFEST.txt
+
+Não há renomeações. Este manifesto não confirma publicação.

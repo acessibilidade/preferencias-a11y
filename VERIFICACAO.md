@@ -72,3 +72,16 @@ Não foram executados testes reais com VoiceOver, outros leitores de tela, vári
 - Texto configure do seu jeito acima do título conferido.
 - Crédito abaixo da versão, ícone SVG decorativo e link com target _blank e rel noopener noreferrer conferidos.
 - Tab alcançou o link com nome acessível “código aberto (abre em uma nova aba)”. Não foi realizado teste com leitor de tela real.
+
+## Idiomas — 1.10.0 (02/11/2026)
+
+- Verificadas no navegador local as mudanças Português → English e English → Português, na página principal e na declaração.
+- Confirmados os nomes de idioma, bandeiras decorativas, idioma do documento e seleção atual.
+- Conferidos os grupos, controles, opções, instruções e mensagens da ferramenta em inglês.
+- O slider de espaçamento anunciou `1.5` em `aria-valuetext`; o ajuste persistiu ao mudar de idioma e página.
+- Movimento pelas setas produziu a mensagem `Panel moved left` e a descrição de posição em inglês na região de status. Escape fechou o painel e devolveu foco ao acionador.
+- A escolha English foi lembrada ao acessar novamente a entrada em português sem parâmetro de idioma.
+- Em 320 px, documento com 305 px úteis sem transbordamento horizontal; painel entre x=12 e x=293, sem transbordamento interno (279 px de clientWidth e scrollWidth).
+- Em 1280 px, documento com 1265 px úteis sem transbordamento horizontal e seção de recursos em duas colunas.
+- Verificadas sintaxe dos scripts, traduções das páginas, referências locais, IDs únicos, tags completas em uma linha e integridade/conteúdo atualizado do ZIP.
+- Inspeção da árvore de acessibilidade e de valores DOM; não foram realizados novos testes com VoiceOver ou outros leitores de tela reais nesta atualização.
