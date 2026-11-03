@@ -70,10 +70,24 @@
   clip-path: inset(50%);
   white-space: nowrap;
 }
-:host .trigger {
+:host .preferences-dock {
   position: fixed;
   top: 12px;
   right: 16px;
+  width: max-content;
+  max-width: calc(100% - 24px);
+  max-height: calc(100dvh - 24px);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 12px;
+  pointer-events: none;
+}
+:host .trigger {
+  flex: 0 0 auto;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  pointer-events: auto;
   padding: 10px 17px;
   background: #4c205b;
   color: #fff;
@@ -87,19 +101,24 @@
   box-shadow: 0 3px 16px #28172b26;
 }
 :host .panel {
-  position: fixed;
-  top: 68px;
-  right: 16px;
   width: 370px;
-  max-width: calc(100% - 24px);
-  max-height: min(640px, calc(100dvh - 80px));
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
+  max-width: 100%;
+  min-height: 0;
+  max-height: min(640px, calc(100dvh - 24px));
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+  scrollbar-width: auto;
+  overflow-wrap: anywhere;
+  pointer-events: auto;
   background: #fff;
   border: 1px solid #d8c5df;
   border-radius: 16px;
   box-shadow: 0 16px 60px #321b3740;
+}
+:host .panel.is-floating {
+  position: fixed;
+  max-width: calc(100% - 24px);
 }
 :host .panel-header {
   flex: 0 0 auto;
@@ -108,6 +127,15 @@
   gap: 12px;
   align-items: flex-start;
   justify-content: space-between;
+  flex-wrap: wrap;
+}
+:host .panel-header > div {
+  flex: 1 1 12rem;
+  min-width: 0;
+}
+:host .close {
+  flex: 0 0 auto;
+  max-width: 100%;
 }
 :host .eyebrow {
   margin: 0 0 6px;
@@ -197,10 +225,7 @@
   outline-offset: 3px;
 }
 @media (max-width: 420px) {
-  :host .panel {
-    right: 12px;
-  }
-  :host .trigger {
+  :host .preferences-dock {
     right: 12px;
   }
 }
@@ -434,21 +459,17 @@ html[data-fm-zoom="400"] #fm-preferences {
 
 :host .panel-content {
   min-height: 0;
-  overflow-y: auto;
-  overflow-x: hidden;
-  overscroll-behavior: contain;
-  scrollbar-gutter: stable;
-  scrollbar-width: thin;
-  scrollbar-color: #987aa3 #f8f4f9;
+  overflow: visible;
   padding: 4px 4px 8px;
 }
-:host .panel-content::-webkit-scrollbar {
-  width: 8px;
+:host .panel::-webkit-scrollbar {
+  width: 16px;
 }
-:host .panel-content::-webkit-scrollbar-track {
+:host .panel::-webkit-scrollbar-track {
   background: #f8f4f9;
 }
-:host .panel-content::-webkit-scrollbar-thumb {
+:host .panel::-webkit-scrollbar-thumb {
+  min-height: 44px;
   background: #987aa3;
   border: 2px solid #f8f4f9;
   border-radius: 8px;
@@ -640,9 +661,9 @@ html[data-fm-font="open-sans"] {
   min-width: 0;
 }
 :host .range-controls button {
-  flex: 0 0 44px;
-  width: 44px;
-  height: 44px;
+  flex: 0 0 auto;
+  width: max(44px, 1.5em);
+  height: max(44px, 1.5em);
   padding: 0;
   border: 1px solid #81558b;
   border-radius: 50%;

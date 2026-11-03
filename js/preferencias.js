@@ -2,7 +2,7 @@
 (() => {
   'use strict';
   const script = document.currentScript;
-  const cssURL = new URL('../css/preferencias.css?v=1.10.0', script.src).href;
+  const cssURL = new URL('../css/preferencias.css?v=1.10.0-reflow2', script.src).href;
   const key = 'fm-preferencias-v1';
   const visibilityKey = `fm-preferencias-hidden-v1:${location.pathname}${location.search}`;
   const compactKey = `fm-preferencias-compact-v1:${location.pathname}${location.search}`;
@@ -146,6 +146,7 @@
       motion: [t('Pausar animações'), []]
     };
     const container = document.createElement('div');
+    container.className = 'preferences-dock';
     container.innerHTML = `
       <a class="trigger" href="#fm-panel" tabindex="0" aria-controls="fm-panel" aria-expanded="false"><span class="trigger-label">${t("exibir preferências")}</span><svg class="trigger-icon" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M480-720q-33 0-56.5-23.5T400-800q0-33 23.5-56.5T480-880q33 0 56.5 23.5T560-800q0 33-23.5 56.5T480-720ZM360-120v-480q-68-6-127-16t-113-24l20-80q75 20 159 30t181 10q97 0 181-10t159-30l20 80q-54 14-113 24t-127 16v480h-80v-240h-80v240h-80Zm440-320q-17 0-28.5-11.5T760-480q0-17 11.5-28.5T800-520q17 0 28.5 11.5T840-480q0 17-11.5 28.5T800-440Zm0 160q-17 0-28.5-11.5T760-320q0-17 11.5-28.5T800-360q17 0 28.5 11.5T840-320q0 17-11.5 28.5T800-280Zm0 160q-17 0-28.5-11.5T760-160q0-17 11.5-28.5T800-200q17 0 28.5 11.5T840-160q0 17-11.5 28.5T800-120Z"/></svg><span class="sr-only"> ${t("— abre o painel na mesma página")}</span></a>
       <section id="fm-panel" class="panel" aria-labelledby="fm-title" hidden>
