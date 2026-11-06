@@ -2,7 +2,7 @@
 (() => {
   'use strict';
   const script = document.currentScript;
-  const cssURL = new URL('../css/preferencias.css?v=1.10.0-reflow2', script.src).href;
+  const cssURL = new URL('../css/preferencias.css?v=1.10.0-contrast2', script.src).href;
   const key = 'fm-preferencias-v1';
   const visibilityKey = `fm-preferencias-hidden-v1:${location.pathname}${location.search}`;
   const compactKey = `fm-preferencias-compact-v1:${location.pathname}${location.search}`;

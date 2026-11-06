@@ -321,12 +321,17 @@ html[data-fm-contrast],
 html[data-fm-contrast] body,
 html[data-fm-contrast]
   body
-  :not(svg, svg *, img, video, canvas, #fm-preferences) {
+  :where(:not(svg, svg *, img, video, canvas, #fm-preferences)) {
   background-color: var(--fm-bg) !important;
   color: var(--fm-fg) !important;
   border-color: currentColor !important;
   background-image: none !important;
   text-shadow: none !important;
+}
+/* Decorative layers must not become opaque surfaces over page content. */
+html[data-fm-contrast] body [aria-hidden="true"],
+html[data-fm-contrast] body [aria-hidden="true"] * {
+  background-color: transparent !important;
 }
 html[data-fm-contrast] body a {
   text-decoration: underline !important;
